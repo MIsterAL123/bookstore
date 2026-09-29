@@ -10,7 +10,7 @@
         </div>
         <div class="space-y-6 text-gray-600 text-sm leading-relaxed">
             <p><strong>BookStore</strong> adalah platform toko buku online yang mempermudah pencinta buku mendapatkan buku berkualitas secara aman dan nyaman.</p>
-            <p>Kami mengadopsi sistem transaksi <strong>Payment at Delivery (Cash on Delivery / COD)</strong> — Anda dapat memesan buku favorit dan membayar saat buku tiba di tempat Anda.</p>
+            <p>Kami menyediakan beberapa metode pembayaran simulasi untuk kebutuhan demo. Tidak ada gateway, pemotongan saldo, atau transaksi nyata.</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-gray-100">
                 <div class="p-4 bg-slate-50 rounded-lg">
                     <h3 class="font-bold text-gray-900 mb-2 flex items-center"><i class="fa-solid fa-bullseye text-amber-500 mr-2"></i>Misi Kami</h3>

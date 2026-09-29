@@ -4,9 +4,10 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
     <h1 class="text-2xl font-bold text-gray-900 mb-6 flex items-center"><i class="fa-solid fa-shopping-cart text-amber-500 mr-3"></i>Keranjang Belanja</h1>
     @if ($cartItems->isNotEmpty())
+        @php($paymentMethods = \App\Models\Order::PAYMENT_METHODS)
         {{-- Satu form membungkus daftar buku + alamat kirim + tombol checkout --}}
         <form action="{{ route('checkout') }}" method="POST"
-              data-confirm="Pesanan akan dibuat dengan metode Cash on Delivery. Anda membayar saat buku tiba."
+              data-confirm="Pesanan akan dibuat menggunakan metode pembayaran simulasi yang dipilih. Tidak ada transaksi atau pemotongan saldo nyata."
               data-confirm-title="Konfirmasi Checkout"
               data-confirm-ok="Ya, Checkout Sekarang"
               data-confirm-cancel="Kembali ke Keranjang"
@@ -62,7 +63,7 @@
                         <h2 class="text-base font-bold text-gray-900 flex items-center mb-1">
                             <i class="fa-solid fa-location-dot text-amber-500 mr-2"></i>Alamat Pengiriman
                         </h2>
-                        <p class="text-xs text-gray-500 mb-5">Lengkapi alamat rumah Anda. Buku akan dikirim ke alamat ini dan dibayar tunai saat tiba (COD).</p>
+                        <p class="text-xs text-gray-500 mb-5">Lengkapi alamat rumah Anda. Pilihan pembayaran di bawah hanya simulasi dan tidak terhubung ke layanan pembayaran nyata.</p>
 
                         @if ($errors->any())
                             <div class="mb-5 p-3 bg-red-50 border-l-4 border-red-500 text-red-700 rounded text-xs">
@@ -136,6 +137,38 @@
                             </p>
                         @endif
                     </div>
+
+                    {{-- Metode pembayaran simulasi --}}
+                    <fieldset class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                        <legend class="text-base font-bold text-gray-900 flex items-center mb-1">
+                            <i class="fa-solid fa-credit-card text-amber-500 mr-2"></i>Metode Pembayaran
+                        </legend>
+                        <p class="text-xs text-gray-500 mb-5">Pilih salah satu untuk simulasi checkout. Tidak ada uang yang ditagihkan.</p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            @foreach ($paymentMethods as $value => $method)
+                                <label class="relative block cursor-pointer">
+                                    <input type="radio" name="payment_method" value="{{ $value }}"
+                                           data-payment-method required
+                                           {{ old('payment_method', \App\Models\Order::DEFAULT_PAYMENT_METHOD) === $value ? 'checked' : '' }}
+                                           class="peer sr-only">
+                                    <span class="flex h-full flex-col rounded-xl border-2 border-gray-200 bg-white p-4 transition hover:border-amber-300 peer-checked:border-amber-500 peer-checked:bg-amber-50 peer-focus-visible:ring-2 peer-focus-visible:ring-amber-500 peer-focus-visible:ring-offset-2">
+                                        <span class="mb-3 flex items-center justify-between">
+                                            <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 text-slate-700 peer-checked:bg-amber-100 peer-checked:text-amber-700">
+                                                <i class="fa-solid {{ $method['icon'] }}"></i>
+                                            </span>
+                                            <i data-payment-check class="fa-solid fa-circle-check text-amber-500 opacity-0 transition"></i>
+                                        </span>
+                                        <span data-payment-label class="text-sm font-bold text-gray-900">{{ $method['label'] }}</span>
+                                        <span class="mt-1 text-xs leading-relaxed text-gray-500">{{ $method['description'] }}</span>
+                                    </span>
+                                </label>
+                            @endforeach
+                        </div>
+                        @error('payment_method')
+                            <p class="mt-3 text-xs font-semibold text-red-600">{{ $message }}</p>
+                        @enderror
+                    </fieldset>
                 </div>
 
                 {{-- ================= KOLOM KANAN: RINGKASAN ================= --}}
@@ -143,19 +176,45 @@
                     <h2 class="text-base font-bold text-gray-900 border-b pb-3 mb-4">Ringkasan Pesanan</h2>
                     <div class="space-y-3 text-sm mb-6">
                         <div class="flex justify-between text-gray-600"><span>Total Item</span><span class="font-semibold">{{ $cartItems->sum('quantity') }} buku</span></div>
-                        <div class="flex justify-between text-gray-600"><span>Metode Pembayaran</span><span class="font-semibold text-amber-600">Payment at Delivery (COD)</span></div>
+                        <div class="flex items-start justify-between gap-4 text-gray-600"><span>Metode Pembayaran</span><span id="selected-payment-label" class="text-right font-semibold text-amber-600">Bayar di Tempat (Simulasi COD)</span></div>
                         <div class="border-t pt-3 flex justify-between text-base font-extrabold text-gray-900"><span>Total Pembayaran</span><span class="text-amber-600">Rp {{ number_format($totalPrice, 0, ',', '.') }}</span></div>
                     </div>
                     <div class="p-3 bg-amber-50 rounded-lg text-xs text-amber-800 mb-6 flex items-start space-x-2">
                         <i class="fa-solid fa-circle-info text-amber-600 mt-0.5"></i>
-                        <span>Pesanan akan diproses setelah alamat pengiriman lengkap. Bayar tunai saat buku tiba.</span>
+                        <span>Pesanan hanya dicatat sebagai simulasi. Tidak ada pembayaran nyata, pemotongan saldo, atau koneksi ke gateway.</span>
                     </div>
                     <button type="submit" class="w-full py-3.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-bold text-sm shadow-md transition flex items-center justify-center space-x-2">
-                        <i class="fa-solid fa-truck-fast"></i><span>Checkout Sekarang (COD)</span>
+                        <i class="fa-solid fa-clipboard-check"></i><span>Konfirmasi Simulasi Checkout</span>
                     </button>
                 </div>
             </div>
         </form>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const paymentInputs = document.querySelectorAll('[data-payment-method]');
+                const selectedLabel = document.getElementById('selected-payment-label');
+                if (!paymentInputs.length || !selectedLabel) return;
+
+                function updatePaymentSummary() {
+                    paymentInputs.forEach(function (input) {
+                        const check = input.closest('label').querySelector('[data-payment-check]');
+                        check.classList.toggle('opacity-0', !input.checked);
+                        check.classList.toggle('opacity-100', input.checked);
+                    });
+
+                    const selected = document.querySelector('[data-payment-method]:checked');
+                    selectedLabel.textContent = selected
+                        ? selected.closest('label').querySelector('[data-payment-label]').textContent
+                        : 'Pilih metode pembayaran';
+                }
+
+                paymentInputs.forEach(function (input) {
+                    input.addEventListener('change', updatePaymentSummary);
+                });
+                updatePaymentSummary();
+            });
+        </script>
 
         {{-- Form bantu (update & hapus item) di luar form checkout untuk menghindari nesting --}}
         @foreach ($cartItems as $item)

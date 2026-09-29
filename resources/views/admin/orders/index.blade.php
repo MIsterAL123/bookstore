@@ -27,7 +27,7 @@
                                 @foreach ($order->items as $item)
                                     <li class="flex items-center space-x-2">
                                         <span class="font-semibold text-gray-800">{{ $item->book->title ?? 'Buku' }}</span>
-                                        <span class="text-gray-400">({{ $item->quantity }}x @ Rp {{ number_format($item->book->price ?? 0, 0, ',', '.') }})</span>
+                                        <span class="text-gray-400">({{ $item->quantity }}x @ Rp {{ number_format($item->unit_price ?? $item->book->price ?? 0, 0, ',', '.') }})</span>
                                     </li>
                                 @endforeach
                             </ul>
@@ -47,7 +47,7 @@
                             @endif
                         </td>
                         <td class="p-4 font-extrabold text-amber-600">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
-                        <td class="p-4"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-blue-50 text-blue-700">{{ $order->payment_method }}</span></td>
+                        <td class="p-4"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-blue-50 text-blue-700">{{ $order->payment_method_label }}</span></td>
                         <td class="p-4">
                             <form action="{{ route('admin.orders.update-status', $order) }}" method="POST" class="flex items-center space-x-2">
                                 @csrf @method('PATCH')

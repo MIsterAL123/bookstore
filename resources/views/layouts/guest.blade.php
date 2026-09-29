@@ -44,7 +44,7 @@
                         Jendela Ilmu &amp; Inspirasi untuk <span class="text-amber-400">Generasi Cerdas</span>
                     </h1>
                     <p class="text-slate-300 text-sm leading-relaxed mb-8">
-                        Temukan ribuan judul buku berkualitas, pesan dengan praktis, dan bayar saat buku tiba di tanganmu &mdash; <span class="text-amber-300 font-semibold">Payment at Delivery (COD)</span>.
+                        Temukan judul buku berkualitas, pesan dengan praktis, lalu gunakan pilihan pembayaran simulasi saat checkout.
                     </p>
 
                     {{-- Poin keunggulan --}}
@@ -52,8 +52,8 @@
                         <li class="flex items-start space-x-3">
                             <span class="flex items-center justify-center w-9 h-9 rounded-lg bg-white/10 text-amber-400 shrink-0"><i class="fa-solid fa-truck-fast"></i></span>
                             <div>
-                                <p class="text-sm font-semibold">Bayar Saat Barang Tiba</p>
-                                <p class="text-xs text-slate-400">Tanpa transfer di muka, transaksi aman &amp; nyaman.</p>
+                                <p class="text-sm font-semibold">Pembayaran Simulasi</p>
+                                <p class="text-xs text-slate-400">Tidak ada uang yang dikirim atau dipotong dari saldo.</p>
                             </div>
                         </li>
                         <li class="flex items-start space-x-3">

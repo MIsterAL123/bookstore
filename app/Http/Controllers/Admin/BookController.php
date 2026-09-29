@@ -94,6 +94,10 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
+        if ($book->orderItems()->exists()) {
+            return back()->with('error', 'Buku tidak dapat dihapus karena sudah tercatat dalam pesanan.');
+        }
+
         $oldImage = $book->getRawOriginal('image_url');
         if ($oldImage && !str_starts_with($oldImage, 'http://') && !str_starts_with($oldImage, 'https://')) {
             Storage::disk('public')->delete($oldImage);

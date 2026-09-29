@@ -4,7 +4,7 @@
 <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 text-white py-12 px-4 shadow-inner">
     <div class="max-w-7xl mx-auto text-center">
         <h1 class="text-3xl md:text-5xl font-extrabold mb-3 tracking-tight">Temukan Buku Favoritmu di <span class="text-amber-400">BookStore</span></h1>
-        <p class="text-slate-300 max-w-xl mx-auto text-sm md:text-base mb-6">Pesan online dengan praktis, bayar saat buku sampai di tanganmu (COD).</p>
+        <p class="text-slate-300 max-w-xl mx-auto text-sm md:text-base mb-6">Pesan buku dengan praktis, lalu pilih metode pembayaran simulasi saat checkout.</p>
         <form action="{{ route('home') }}" method="GET" class="max-w-2xl mx-auto flex flex-col sm:flex-row gap-2">
             <div class="relative flex-1">
                 <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"><i class="fa-solid fa-magnifying-glass"></i></span>

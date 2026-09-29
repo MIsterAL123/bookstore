@@ -84,7 +84,7 @@
     <footer class="bg-slate-900 text-slate-400 py-8 mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div class="text-amber-400 text-lg font-extrabold mb-2"><i class="fa-solid fa-book-open mr-2"></i>BookStore</div>
-            <p class="text-xs mb-4">Platform toko buku online dengan sistem pembayaran Cash on Delivery (COD).</p>
+            <p class="text-xs mb-4">Platform toko buku online dengan pilihan pembayaran simulasi. Tidak ada transaksi nyata.</p>
             <div class="flex justify-center space-x-6 text-xs">
                 <a href="{{ route('home') }}" class="hover:text-white transition">Katalog Buku</a>
                 <a href="{{ route('about') }}" class="hover:text-white transition">Tentang Kami</a>

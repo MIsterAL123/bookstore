@@ -4,7 +4,7 @@
     {{-- Judul --}}
     <div class="mb-7">
         <h2 class="text-2xl font-extrabold text-slate-900">Buat Akun Baru</h2>
-        <p class="text-sm text-slate-500 mt-1">Gratis! Mulai jelajahi katalog buku dan pesan dengan COD.</p>
+        <p class="text-sm text-slate-500 mt-1">Mulai jelajahi katalog buku dengan pilihan pembayaran simulasi.</p>
     </div>
 
     <form method="POST" action="{{ route('register') }}" class="space-y-5">

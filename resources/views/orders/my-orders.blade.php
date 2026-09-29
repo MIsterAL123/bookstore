@@ -5,7 +5,7 @@
     <div class="flex justify-between items-center mb-6">
         <div>
             <h1 class="text-2xl font-bold text-gray-900 flex items-center"><i class="fa-solid fa-box text-amber-500 mr-3"></i>Riwayat Pesanan Saya</h1>
-            <p class="text-xs text-gray-500">Daftar buku yang telah dipesan dengan metode Payment at Delivery</p>
+            <p class="text-xs text-gray-500">Riwayat pesanan dan metode pembayaran simulasi. Tidak ada transaksi nyata.</p>
         </div>
         <a href="{{ route('home') }}" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold">Beli Buku Lagi</a>
     </div>
@@ -23,7 +23,7 @@
                         @elseif($order->status === 'processing') bg-blue-100 text-blue-800
                         @elseif($order->status === 'cancelled') bg-red-100 text-red-800
                         @else bg-yellow-100 text-yellow-800 @endif">{{ $order->status }}</span>
-                    <span class="bg-amber-100 text-amber-800 font-semibold px-2 py-1 rounded">{{ $order->payment_method }}</span>
+                    <span class="bg-amber-100 text-amber-800 font-semibold px-2 py-1 rounded">{{ $order->payment_method_label }}</span>
                 </div>
             </div>
             <div class="divide-y divide-gray-100 p-4">
@@ -33,7 +33,7 @@
                             <img src="{{ $item->book->image_url ?: asset('images/books/default.svg') }}" alt="{{ $item->book->title }}" class="w-10 h-14 object-cover rounded shadow-sm">
                             <div>
                                 <h4 class="font-bold text-gray-900">{{ $item->book->title }}</h4>
-                                <div class="text-xs text-gray-400">{{ $item->quantity }} x Rp {{ number_format($item->book->price, 0, ',', '.') }}</div>
+                                <div class="text-xs text-gray-400">{{ $item->quantity }} x Rp {{ number_format($item->unit_price ?? $item->book->price, 0, ',', '.') }}</div>
                             </div>
                         </div>
                         <div class="font-bold text-gray-900">Rp {{ number_format($item->subtotal, 0, ',', '.') }}</div>

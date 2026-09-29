@@ -9,6 +9,7 @@ use App\Models\Message;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
@@ -149,6 +150,21 @@ class BookStoreEndToEndTest extends TestCase
         $this->assertNull(Category::find($cat->id));
     }
 
+    public function test_admin_cannot_delete_category_that_has_books(): void
+    {
+        $admin = $this->makeAdmin();
+        $book = $this->makeBook();
+        $category = $book->category;
+        $this->assertTrue($category->books()->whereKey($book->id)->exists());
+
+        $this->actingAs($admin)->delete('/admin/categories/'.$category->id)
+            ->assertRedirect()
+            ->assertSessionHas('error');
+
+        $this->assertNotNull($category->fresh());
+        $this->assertNotNull($book->fresh());
+    }
+
     public function test_admin_can_crud_book(): void
     {
         $admin = $this->makeAdmin();
@@ -169,6 +185,27 @@ class BookStoreEndToEndTest extends TestCase
 
         $this->actingAs($admin)->delete('/admin/books/'.$book->id)->assertRedirect();
         $this->assertNull(Book::find($book->id));
+    }
+
+    public function test_admin_cannot_delete_book_that_has_order_items(): void
+    {
+        $admin = $this->makeAdmin();
+        $user = $this->makeUser();
+        $book = $this->makeBook();
+        $order = Order::create(['user_id' => $user->id, 'total_price' => 50000]);
+        \App\Models\OrderItem::create([
+            'order_id' => $order->id,
+            'book_id' => $book->id,
+            'quantity' => 1,
+            'subtotal' => 50000,
+        ]);
+
+        $this->actingAs($admin)->delete('/admin/books/'.$book->id)
+            ->assertRedirect()
+            ->assertSessionHas('error');
+
+        $this->assertNotNull($book->fresh());
+        $this->assertDatabaseHas('order_items', ['order_id' => $order->id, 'book_id' => $book->id]);
     }
 
     public function test_admin_can_view_users_orders_messages(): void
@@ -301,7 +338,10 @@ class BookStoreEndToEndTest extends TestCase
             ->assertOk()
             ->assertSee('Alamat Pengiriman')
             ->assertSee('recipient_name')
-            ->assertSee('shipping_address');
+            ->assertSee('shipping_address')
+            ->assertSee('Transfer Bank (Simulasi)')
+            ->assertSee('E-Wallet (Simulasi)')
+            ->assertSee('Tidak ada pembayaran nyata');
     }
 
     public function test_my_orders_shows_shipping_address(): void
@@ -330,7 +370,38 @@ class BookStoreEndToEndTest extends TestCase
             'shipping_address' => 'Jl. Merdeka No. 10',
             'city'             => 'Bandung',
             'postal_code'      => '40123',
+            'payment_method'   => Order::DEFAULT_PAYMENT_METHOD,
         ];
+    }
+
+    public function test_checkout_accepts_dummy_payment_method(): void
+    {
+        $user = $this->makeUser();
+        $book = $this->makeBook(stock: 5, price: 20000);
+        Cart::create(['user_id' => $user->id, 'book_id' => $book->id, 'quantity' => 1]);
+
+        $this->actingAs($user)->post('/checkout', array_merge($this->shippingData(), [
+            'payment_method' => 'Dummy E-Wallet',
+        ]))->assertRedirect(route('orders.my-orders'));
+
+        $this->assertDatabaseHas('orders', [
+            'user_id' => $user->id,
+            'payment_method' => 'Dummy E-Wallet',
+            'status' => 'pending',
+        ]);
+    }
+
+    public function test_checkout_rejects_unknown_payment_method(): void
+    {
+        $user = $this->makeUser();
+        $book = $this->makeBook();
+        Cart::create(['user_id' => $user->id, 'book_id' => $book->id, 'quantity' => 1]);
+
+        $this->actingAs($user)->post('/checkout', array_merge($this->shippingData(), [
+            'payment_method' => 'Real Payment Gateway',
+        ]))->assertSessionHasErrors('payment_method');
+
+        $this->assertSame(0, Order::count());
     }
 
     public function test_checkout_empty_cart_shows_error(): void
@@ -354,6 +425,26 @@ class BookStoreEndToEndTest extends TestCase
         $book->refresh();
         $this->assertGreaterThanOrEqual(0, $book->stock, 'Stok tidak boleh negatif (oversell)');
         $this->assertSame(0, Order::count(), 'Checkout harus gagal bila stok tidak mencukupi');
+    }
+
+    public function test_checkout_rolls_back_when_stock_changes_during_transaction(): void
+    {
+        $user = $this->makeUser();
+        $book = $this->makeBook(stock: 1);
+        Cart::create(['user_id' => $user->id, 'book_id' => $book->id, 'quantity' => 1]);
+
+        $stockChanged = false;
+        DB::listen(function ($query) use (&$stockChanged, $book): void {
+            if (!$stockChanged && str_contains(strtolower($query->sql), 'insert into `orders`')) {
+                $stockChanged = true;
+                Book::whereKey($book->id)->update(['stock' => 0]);
+            }
+        });
+
+        $this->actingAs($user)->post('/checkout', $this->shippingData());
+
+        $this->assertSame(1, $book->fresh()->stock, 'Rollback harus mengembalikan stok bila transaksi gagal');
+        $this->assertSame(0, Order::count(), 'Checkout harus rollback bila stok berubah saat transaksi berjalan');
     }
 
     public function test_my_orders_shows_only_own_orders(): void
@@ -381,9 +472,57 @@ class BookStoreEndToEndTest extends TestCase
         $user = $this->makeUser();
         $order = Order::create(['user_id' => $user->id, 'total_price' => 1000]);
 
+        $this->actingAs($admin)->patch('/admin/orders/'.$order->id.'/status', ['status' => 'processing'])
+            ->assertRedirect();
         $this->actingAs($admin)->patch('/admin/orders/'.$order->id.'/status', ['status' => 'completed'])
             ->assertRedirect();
         $this->assertSame('completed', $order->fresh()->status);
+    }
+
+    public function test_cancelling_order_restores_stock_once_and_blocks_invalid_transition(): void
+    {
+        $admin = $this->makeAdmin();
+        $user = $this->makeUser();
+        $book = $this->makeBook(stock: 3);
+        $order = Order::create(['user_id' => $user->id, 'total_price' => 100000]);
+        // Simulasikan dua unit stok yang sudah dicadangkan oleh checkout.
+        $book->update(['stock' => 1]);
+        \App\Models\OrderItem::create([
+            'order_id' => $order->id,
+            'book_id' => $book->id,
+            'quantity' => 2,
+            'subtotal' => 100000,
+        ]);
+
+        $this->actingAs($admin)->patch('/admin/orders/'.$order->id.'/status', ['status' => 'cancelled'])
+            ->assertRedirect();
+        $this->assertSame(3, $book->fresh()->stock);
+
+        $this->actingAs($admin)->patch('/admin/orders/'.$order->id.'/status', ['status' => 'cancelled'])
+            ->assertRedirect();
+        $this->assertSame(3, $book->fresh()->stock);
+
+        $this->actingAs($admin)->patch('/admin/orders/'.$order->id.'/status', ['status' => 'completed'])
+            ->assertRedirect()
+            ->assertSessionHas('error');
+        $this->assertSame('cancelled', $order->fresh()->status);
+    }
+
+    public function test_order_item_keeps_checkout_price_after_book_price_changes(): void
+    {
+        $user = $this->makeUser();
+        $book = $this->makeBook(stock: 5, price: 20000);
+        Cart::create(['user_id' => $user->id, 'book_id' => $book->id, 'quantity' => 2]);
+
+        $this->actingAs($user)->post('/checkout', $this->shippingData())->assertRedirect();
+        $order = Order::where('user_id', $user->id)->firstOrFail();
+        $book->update(['price' => 99999]);
+
+        $this->assertSame(20000.0, (float) $order->items()->firstOrFail()->unit_price);
+        $this->actingAs($user)->get('/my-orders')
+            ->assertOk()
+            ->assertSee('Rp 20.000')
+            ->assertDontSee('Rp 99.999');
     }
 
     public function test_admin_can_delete_message(): void
@@ -394,5 +533,27 @@ class BookStoreEndToEndTest extends TestCase
 
         $this->actingAs($admin)->delete('/admin/messages/'.$msg->id)->assertRedirect();
         $this->assertNull(Message::find($msg->id));
+    }
+
+    public function test_account_deletion_preserves_order_history_and_anonymizes_owner(): void
+    {
+        $user = $this->makeUser();
+        $book = $this->makeBook();
+        $order = Order::create(['user_id' => $user->id, 'total_price' => 50000]);
+        \App\Models\OrderItem::create([
+            'order_id' => $order->id,
+            'book_id' => $book->id,
+            'quantity' => 1,
+            'subtotal' => 50000,
+        ]);
+        $message = Message::create(['user_id' => $user->id, 'content' => 'Pesan pengguna']);
+
+        $this->actingAs($user)->delete('/profile', ['password' => 'password'])
+            ->assertRedirect('/');
+
+        $this->assertNotNull($order->fresh());
+        $this->assertNull($order->fresh()->user_id);
+        $this->assertDatabaseHas('order_items', ['order_id' => $order->id, 'book_id' => $book->id]);
+        $this->assertNull($message->fresh()->user_id);
     }
 }
