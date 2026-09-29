@@ -12,7 +12,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 p-6 md:p-8">
             <div class="flex justify-center items-start">
                 <img src="{{ $book->image_url }}" alt="{{ $book->title }}"
-                     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400';"
+                     onerror="this.onerror=null;this.src='{{ asset('images/books/default.svg') }}';"
                      class="w-full max-w-xs rounded-xl shadow-lg object-cover">
             </div>
             <div class="md:col-span-2 flex flex-col justify-between">

@@ -9,7 +9,7 @@
 </head>
 <body class="bg-gray-100 font-sans antialiased">
     <div class="min-h-screen flex">
-        <aside class="w-64 bg-slate-800 text-white flex flex-col flex-shrink-0">
+        <aside class="fixed inset-y-0 left-0 z-40 w-64 bg-slate-800 text-white flex flex-col flex-shrink-0 overflow-y-auto">
             <div class="p-5 text-xl font-bold border-b border-slate-700 flex items-center space-x-2">
                 <i class="fa-solid fa-book-open text-amber-400"></i>
                 <span>BookStore Admin</span>
@@ -46,7 +46,7 @@
                 </form>
             </div>
         </aside>
-        <div class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+        <div class="ml-64 h-screen flex-1 flex flex-col min-w-0 overflow-y-auto">
             <header class="bg-white shadow-sm border-b px-6 py-4 flex justify-between items-center">
                 <h1 class="text-xl font-bold text-gray-800">@yield('header')</h1>
                 <a href="{{ route('home') }}" target="_blank" class="text-xs text-blue-600 hover:underline flex items-center">

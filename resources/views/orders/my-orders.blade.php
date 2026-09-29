@@ -30,7 +30,7 @@
                 @foreach ($order->items as $item)
                     <div class="py-3 flex items-center justify-between text-sm">
                         <div class="flex items-center space-x-3">
-                            <img src="{{ $item->book->image_url ?: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400' }}" alt="{{ $item->book->title }}" class="w-10 h-14 object-cover rounded shadow-sm">
+                            <img src="{{ $item->book->image_url ?: asset('images/books/default.svg') }}" alt="{{ $item->book->title }}" class="w-10 h-14 object-cover rounded shadow-sm">
                             <div>
                                 <h4 class="font-bold text-gray-900">{{ $item->book->title }}</h4>
                                 <div class="text-xs text-gray-400">{{ $item->quantity }} x Rp {{ number_format($item->book->price, 0, ',', '.') }}</div>

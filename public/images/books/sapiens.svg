@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Sapiens</title>
+  <desc id="desc">Cover orisinal dengan jejak evolusi manusia dari titik-titik kecil menuju siluet.</desc>
+  <defs>
+    <linearGradient id="history" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#082f49"/>
+      <stop offset="1" stop-color="#155e75"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1200" fill="url(#history)"/>
+  <path d="M80 650 C190 590 240 545 310 515 S470 420 715 300" fill="none" stroke="#f4d35e" stroke-width="8" stroke-dasharray="3 26" stroke-linecap="round"/>
+  <g fill="#f4d35e"><circle cx="130" cy="625" r="18"/><circle cx="235" cy="560" r="24"/><circle cx="350" cy="505" r="32"/><circle cx="490" cy="420" r="42"/></g>
+  <path d="M565 330 C565 274 610 232 664 232 C718 232 758 274 758 330 C758 373 735 398 706 414 L706 525 H622 V414 C588 398 565 373 565 330Z" fill="#f4d35e"/>
+  <circle cx="636" cy="320" r="8" fill="#082f49"/><circle cx="690" cy="320" r="8" fill="#082f49"/>
+  <path d="M640 365 Q664 382 688 365" fill="none" stroke="#082f49" stroke-width="7" stroke-linecap="round"/>
+  <text x="76" y="110" fill="#f4d35e" font-family="Arial, sans-serif" font-size="22" letter-spacing="7">A BRIEF HISTORY</text>
+  <text x="76" y="930" fill="#f8fafc" font-family="Georgia, serif" font-size="104" font-weight="700">SAPIENS</text>
+  <text x="78" y="1045" fill="#f4d35e" font-family="Arial, sans-serif" font-size="24" letter-spacing="2">YUVAL NOAH HARARI</text>
+  <rect x="78" y="1080" width="120" height="5" fill="#f4d35e"/>
+</svg>

@@ -37,14 +37,26 @@ class Book extends Model
 
     /**
      * Accessor untuk mendapatkan URL lengkap gambar cover buku.
-     * Otomatis mengenali apakah disimpan sebagai URL eksternal (http/https)
-     * atau path file yang di-upload ke storage lokal (storage/books/...).
+     * Otomatis mengenali URL eksternal, cover bawaan di public/images/books,
+     * atau path file yang di-upload ke storage lokal.
      * Juga otomatis mengekstrak direct URL jika user menempelkan link Google Images.
      */
     public function getImageUrlAttribute($value)
     {
-        if (!$value) {
-            return 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400';
+        $localCovers = [
+            'Laskar Pelangi' => 'images/books/laskar-pelangi.svg',
+            'Bumi Manusia' => 'images/books/bumi-manusia.svg',
+            'Atomic Habits' => 'images/books/atomic-habits.svg',
+            'Clean Code' => 'images/books/clean-code.svg',
+            'Laravel Up & Running' => 'images/books/laravel-up-running.svg',
+            'Sapiens' => 'images/books/sapiens.svg',
+            'Rich Dad Poor Dad' => 'images/books/rich-dad-poor-dad.svg',
+            'The Lean Startup' => 'images/books/the-lean-startup.svg',
+        ];
+        $localCover = $localCovers[$this->title] ?? 'images/books/default.svg';
+
+        if (!$value || str_contains($value, 'images.unsplash.com')) {
+            return asset($localCover);
         }
 
         // Jika user memasukkan link halaman pencarian Google Images (google.com/imgres?imgurl=...)
@@ -60,6 +72,10 @@ class Book extends Model
 
         if (str_starts_with($value, 'http://') || str_starts_with($value, 'https://')) {
             return $value;
+        }
+
+        if (str_starts_with($value, 'images/')) {
+            return asset($value);
         }
 
         return asset('storage/' . $value);

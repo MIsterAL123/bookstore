@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Kisah inspiratif anak-anak Belitung yang berjuang meraih pendidikan.',
                 'price' => 85000,
                 'stock' => 25,
-                'image_url' => 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400',
+                'image_url' => 'images/books/laskar-pelangi.svg',
                 'category_id' => $fiksi->id,
             ],
             [
@@ -60,7 +60,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Novel sejarah tentang perjuangan dan cinta di era kolonial.',
                 'price' => 95000,
                 'stock' => 15,
-                'image_url' => 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400',
+                'image_url' => 'images/books/bumi-manusia.svg',
                 'category_id' => $fiksi->id,
             ],
             [
@@ -69,7 +69,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Panduan membangun kebiasaan baik dan menghilangkan kebiasaan buruk.',
                 'price' => 120000,
                 'stock' => 30,
-                'image_url' => 'https://images.unsplash.com/photo-1589998059171-988d887df646?w=400',
+                'image_url' => 'images/books/atomic-habits.svg',
                 'category_id' => $nonfiksi->id,
             ],
             [
@@ -78,7 +78,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Panduan menulis kode yang bersih dan mudah dipelihara.',
                 'price' => 200000,
                 'stock' => 10,
-                'image_url' => 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400',
+                'image_url' => 'images/books/clean-code.svg',
                 'category_id' => $teknologi->id,
             ],
             [
@@ -87,7 +87,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Buku panduan lengkap framework Laravel dari dasar hingga mahir.',
                 'price' => 180000,
                 'stock' => 12,
-                'image_url' => 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400',
+                'image_url' => 'images/books/laravel-up-running.svg',
                 'category_id' => $teknologi->id,
             ],
             [
@@ -96,7 +96,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Sejarah singkat umat manusia dari zaman purba hingga modern.',
                 'price' => 135000,
                 'stock' => 20,
-                'image_url' => 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=400',
+                'image_url' => 'images/books/sapiens.svg',
                 'category_id' => $sejarah->id,
             ],
             [
@@ -105,7 +105,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Pelajaran finansial yang tidak diajarkan di sekolah.',
                 'price' => 110000,
                 'stock' => 18,
-                'image_url' => 'https://images.unsplash.com/photo-1553729459-afe8f2e2ed65?w=400',
+                'image_url' => 'images/books/rich-dad-poor-dad.svg',
                 'category_id' => $bisnis->id,
             ],
             [
@@ -114,7 +114,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Bagaimana entrepreneur modern membangun bisnis secara efisien.',
                 'price' => 145000,
                 'stock' => 8,
-                'image_url' => 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400',
+                'image_url' => 'images/books/the-lean-startup.svg',
                 'category_id' => $bisnis->id,
             ],
         ];

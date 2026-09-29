@@ -53,10 +53,10 @@
         </div>
 
         <div class="mb-6">
-            <label for="image_url" class="block text-sm font-semibold text-gray-700 mb-2">URL Gambar Cover (Unsplash/Web)</label>
-            <input type="url" name="image_url" id="image_url" value="{{ old('image_url') }}" placeholder="https://images.unsplash.com/..."
+            <label for="image_url" class="block text-sm font-semibold text-gray-700 mb-2">URL Gambar Cover Berlisensi</label>
+            <input type="url" name="image_url" id="image_url" value="{{ old('image_url') }}" placeholder="https://domain-kamu.com/cover.svg"
                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('image_url') border-red-500 @else border-gray-300 @enderror">
-            <p class="text-xs text-gray-500 mt-1">Gunakan link gambar bebas royalti (Unsplash, dll). Tanpa perlu upload file.</p>
+            <p class="text-xs text-gray-500 mt-1">Gunakan URL gambar buatan sendiri atau yang punya izin pakai. Cover bawaan BookStore tersimpan lokal.</p>
             @error('image_url') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
         </div>
 

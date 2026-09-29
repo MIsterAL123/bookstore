@@ -34,7 +34,7 @@
                         <td class="p-4">
                             <img src="{{ $book->image_url }}"
                                  alt="{{ $book->title }}"
-                                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400';"
+                                 onerror="this.onerror=null;this.src='{{ asset('images/books/default.svg') }}';"
                                  class="w-10 h-14 object-cover rounded shadow-sm">
                         </td>
                         <td class="p-4">
@@ -158,10 +158,10 @@
                     </div>
                     <div>
                         <span class="text-[11px] font-medium text-gray-600 block mb-1">
-                            <i class="fa-solid fa-link mr-1 text-gray-400"></i>Opsi B: Gunakan URL Gambar (Unsplash / Web)
+                            <i class="fa-solid fa-link mr-1 text-gray-400"></i>Opsi B: URL Gambar dengan Lisensi yang Dimiliki
                         </span>
                         <input type="url" name="image_url" value="{{ old('image_url') }}"
-                               placeholder="https://images.unsplash.com/..."
+                               placeholder="https://domain-kamu.com/cover.svg"
                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-xs">
                         @error('image_url') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
                     </div>
@@ -259,10 +259,10 @@
                         </div>
                         <div>
                             <span class="text-[11px] font-medium text-gray-600 block mb-1">
-                                <i class="fa-solid fa-link mr-1 text-gray-400"></i>Opsi B: Ganti dengan URL Gambar
+                                <i class="fa-solid fa-link mr-1 text-gray-400"></i>Opsi B: Ganti dengan URL Berlisensi
                             </span>
                             <input type="url" name="image_url" id="edit_image_url"
-                                   placeholder="https://images.unsplash.com/..."
+                                   placeholder="https://domain-kamu.com/cover.svg"
                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none text-xs">
                         </div>
                     </div>
@@ -359,15 +359,15 @@ function openEditBuku(id) {
     // Tampilkan preview cover saat ini
     const preview = document.getElementById('edit_cover_preview');
     if (preview) {
-        preview.src = book.image_url || 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400';
+        preview.src = book.image_url || '{{ asset('images/books/default.svg') }}';
     }
 
     // Reset file input
     const fileInput = document.getElementById('edit_image_file');
     if (fileInput) fileInput.value = '';
 
-    // Jika gambar adalah URL eksternal (Unsplash dll), isi di input URL
-    const isExternalUrl = book.image_url && (book.image_url.startsWith('http://') || book.image_url.startsWith('https://')) && !book.image_url.includes('/storage/books/');
+    // Jika gambar adalah URL eksternal, isi di input URL
+    const isExternalUrl = book.image_url && (book.image_url.startsWith('http://') || book.image_url.startsWith('https://')) && !book.image_url.includes('/storage/books/') && !book.image_url.includes('/images/books/');
     document.getElementById('edit_image_url').value = isExternalUrl ? book.image_url : '';
 
     document.getElementById('edit_description').value = book.description || '';

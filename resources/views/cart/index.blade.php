@@ -28,7 +28,7 @@
                                     @foreach ($cartItems as $item)
                                         <tr class="hover:bg-gray-50 transition">
                                             <td class="p-4 flex items-center space-x-3">
-                                                <img src="{{ $item->book->image_url ?: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400' }}" alt="{{ $item->book->title }}" class="w-12 h-16 object-cover rounded shadow-sm">
+                                                <img src="{{ $item->book->image_url ?: asset('images/books/default.svg') }}" alt="{{ $item->book->title }}" class="w-12 h-16 object-cover rounded shadow-sm">
                                                 <div>
                                                     <a href="{{ route('books.show', $item->book->id) }}" class="font-bold text-gray-900 hover:text-amber-600 transition">{{ $item->book->title }}</a>
                                                     <div class="text-xs text-gray-400">{{ $item->book->category->name }}</div>

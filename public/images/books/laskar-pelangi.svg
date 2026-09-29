@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Laskar Pelangi</title>
+  <desc id="desc">Cover orisinal dengan pelangi berlapis di atas lanskap pulau.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#102a43"/>
+      <stop offset="0.62" stop-color="#247ba0"/>
+      <stop offset="1" stop-color="#f6bd60"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1200" fill="url(#sky)"/>
+  <circle cx="630" cy="235" r="84" fill="#f7ede2" opacity=".86"/>
+  <path d="M-60 630 Q400 190 860 630" fill="none" stroke="#f25f5c" stroke-width="34"/>
+  <path d="M-40 670 Q400 250 840 670" fill="none" stroke="#f6bd60" stroke-width="34"/>
+  <path d="M-20 710 Q400 310 820 710" fill="none" stroke="#70c1b3" stroke-width="34"/>
+  <path d="M0 750 Q400 370 800 750" fill="none" stroke="#f7ede2" stroke-width="34"/>
+  <path d="M0 900 Q220 770 430 900 T800 880 V1200 H0Z" fill="#12343b"/>
+  <path d="M0 990 Q170 885 330 960 T800 930 V1200 H0Z" fill="#0b2529"/>
+  <path d="M170 864 l28 -104 28 104 M515 880 l25 -96 25 96" stroke="#f6bd60" stroke-width="8" fill="none"/>
+  <rect x="48" y="714" width="704" height="194" rx="12" fill="#0b2529" opacity=".72"/>
+  <text x="72" y="100" fill="#f7ede2" font-family="Georgia, serif" font-size="24" letter-spacing="5">BOOKSTORE ORIGINAL</text>
+  <text x="72" y="790" fill="#fff8ed" font-family="Georgia, serif" font-size="82" font-weight="700">LASKAR</text>
+  <text x="72" y="874" fill="#f6bd60" font-family="Georgia, serif" font-size="82" font-weight="700">PELANGI</text>
+  <text x="76" y="1058" fill="#f7ede2" font-family="Arial, sans-serif" font-size="25" letter-spacing="3">ANDREA HIRATA</text>
+  <rect x="72" y="1090" width="122" height="5" fill="#f25f5c"/>
+</svg>

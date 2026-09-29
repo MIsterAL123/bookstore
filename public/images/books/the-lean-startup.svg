@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" role="img" aria-labelledby="title desc">
+  <title id="title">The Lean Startup</title>
+  <desc id="desc">Cover orisinal dengan siklus belajar, ukur, dan bangun.</desc>
+  <defs>
+    <linearGradient id="startup" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#12372a"/>
+      <stop offset="1" stop-color="#2a9d8f"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1200" fill="url(#startup)"/>
+  <path d="M400 330 A190 190 0 1 1 245 412" fill="none" stroke="#f6bd60" stroke-width="24" stroke-linecap="round"/>
+  <path d="M220 350 L245 412 L310 390" fill="none" stroke="#f6bd60" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="400" cy="520" r="92" fill="#f6bd60"/>
+  <path d="M400 454 V586 M334 520 H466" stroke="#12372a" stroke-width="18" stroke-linecap="round"/>
+  <g fill="#f1faee"><circle cx="160" cy="790" r="12"/><circle cx="215" cy="790" r="12"/><circle cx="270" cy="790" r="12"/></g>
+  <path d="M128 860 H672" stroke="#f1faee" stroke-width="4" opacity=".6"/>
+  <text x="76" y="112" fill="#f1faee" font-family="Arial, sans-serif" font-size="22" letter-spacing="6">BUILD • MEASURE • LEARN</text>
+  <text x="76" y="940" fill="#f1faee" font-family="Arial, sans-serif" font-size="61" font-weight="700">THE LEAN</text>
+  <text x="76" y="1010" fill="#f6bd60" font-family="Arial, sans-serif" font-size="61" font-weight="700">STARTUP</text>
+  <text x="78" y="1090" fill="#f1faee" font-family="Arial, sans-serif" font-size="24" letter-spacing="2">ERIC RIES</text>
+</svg>

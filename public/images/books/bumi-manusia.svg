@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Bumi Manusia</title>
+  <desc id="desc">Cover orisinal bernuansa tanah merah dengan garis horizon dan siluet manusia.</desc>
+  <defs>
+    <linearGradient id="earth" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#291d1b"/>
+      <stop offset=".55" stop-color="#8c3f35"/>
+      <stop offset="1" stop-color="#d38b5d"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1200" fill="url(#earth)"/>
+  <path d="M0 630 C160 570 250 690 410 620 S660 560 800 650" fill="none" stroke="#f3d5a5" stroke-width="4" opacity=".7"/>
+  <path d="M0 700 C180 640 290 750 455 680 S670 640 800 720" fill="none" stroke="#f3d5a5" stroke-width="2" opacity=".45"/>
+  <circle cx="585" cy="330" r="142" fill="#f3d5a5" opacity=".16"/>
+  <circle cx="585" cy="330" r="94" fill="none" stroke="#f3d5a5" stroke-width="2" opacity=".7"/>
+  <path d="M0 930 Q180 820 350 900 T800 850 V1200 H0Z" fill="#201516"/>
+  <path d="M290 930 C292 820 330 770 380 770 C430 770 468 820 470 930Z" fill="#0f1112"/>
+  <circle cx="380" cy="730" r="49" fill="#0f1112"/>
+  <path d="M338 930 L338 1080 M422 930 L422 1080" stroke="#0f1112" stroke-width="26"/>
+  <text x="70" y="105" fill="#f3d5a5" font-family="Arial, sans-serif" font-size="22" letter-spacing="6">NOVEL SEJARAH</text>
+  <text x="70" y="180" fill="#fff0d2" font-family="Georgia, serif" font-size="76" font-weight="700">BUMI</text>
+  <text x="70" y="258" fill="#f3d5a5" font-family="Georgia, serif" font-size="76" font-weight="700">MANUSIA</text>
+  <text x="72" y="1090" fill="#fff0d2" font-family="Arial, sans-serif" font-size="23" letter-spacing="2">PRAMOEDYA ANANTA TOER</text>
+  <rect x="70" y="1120" width="168" height="4" fill="#f3d5a5"/>
+</svg>

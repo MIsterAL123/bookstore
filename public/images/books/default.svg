@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" role="img" aria-labelledby="title desc">
+  <title id="title">BookStore</title>
+  <desc id="desc">Cover buku orisinal BookStore.</desc>
+  <rect width="800" height="1200" fill="#0f172a"/>
+  <rect x="58" y="58" width="684" height="1084" rx="18" fill="none" stroke="#f59e0b" stroke-width="5"/>
+  <path d="M252 420 H548 M252 490 H548 M252 560 H470" stroke="#f59e0b" stroke-width="16" stroke-linecap="round"/>
+  <path d="M270 700 Q400 570 530 700 V850 H270Z" fill="none" stroke="#e2e8f0" stroke-width="14"/>
+  <path d="M330 850 V760 H470 V850" fill="none" stroke="#e2e8f0" stroke-width="14"/>
+  <text x="96" y="190" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="24" letter-spacing="6">ORIGINAL COVER</text>
+  <text x="96" y="1010" fill="#f8fafc" font-family="Georgia, serif" font-size="68" font-weight="700">BOOKSTORE</text>
+  <text x="98" y="1075" fill="#f59e0b" font-family="Arial, sans-serif" font-size="24" letter-spacing="3">READ SOMETHING NEW</text>
+</svg>

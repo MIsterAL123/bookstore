@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Clean Code</title>
+  <desc id="desc">Cover orisinal bertema editor kode dengan kurung dan garis sintaks.</desc>
+  <defs>
+    <linearGradient id="code" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1200" fill="url(#code)"/>
+  <circle cx="660" cy="210" r="160" fill="#f59e0b" opacity=".12"/>
+  <path d="M170 310 L82 510 L170 710 M630 310 L718 510 L630 710" fill="none" stroke="#f59e0b" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M330 350 L260 670 M390 395 H575 M390 490 H520 M390 585 H585" stroke="#34d399" stroke-width="13" stroke-linecap="round"/>
+  <rect x="76" y="820" width="648" height="2" fill="#475569"/>
+  <text x="76" y="115" fill="#94a3b8" font-family="Arial, sans-serif" font-size="22" letter-spacing="5">PRAKTIK PEMROGRAMAN</text>
+  <text x="76" y="930" fill="#f8fafc" font-family="Arial, sans-serif" font-size="78" font-weight="700">CLEAN</text>
+  <text x="76" y="1012" fill="#f59e0b" font-family="Arial, sans-serif" font-size="78" font-weight="700">CODE</text>
+  <text x="78" y="1090" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="24" letter-spacing="2">ROBERT C. MARTIN</text>
+</svg>

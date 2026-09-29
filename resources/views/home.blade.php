@@ -39,7 +39,7 @@
             <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition border border-gray-100 flex flex-col overflow-hidden group">
                 <a href="{{ route('books.show', $book->id) }}" class="relative block bg-gray-100 h-64 overflow-hidden">
                     <img src="{{ $book->image_url }}" alt="{{ $book->title }}"
-                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400';"
+                         onerror="this.onerror=null;this.src='{{ asset('images/books/default.svg') }}';"
                          class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                     <span class="absolute top-2 right-2 bg-amber-500 text-white text-xs font-semibold px-2 py-1 rounded shadow">{{ $book->category->name }}</span>
                 </a>
